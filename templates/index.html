@@ -1,0 +1,117 @@
+{% extends 'base/base.html' %}
+{% load static %}
+
+{% block title %} MY SITE {% endblock %}
+{% block content %}
+
+    <!-- Start Slider -->
+    {% include 'component/slideshow.html' %}
+    <!-- End Slider -->
+
+    <!-- Start Categories  -->
+    <div class="categories-shop">
+        <div class="container">
+            <div class="row">
+                {% for category in categories %}
+                    {% if category.parent == None %}
+                        <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                            <div class="shop-cat-box">
+                                <img class="img-fluid" src="{{ category.image.url }}" alt=""/>
+                                <a class="btn hvr-hover" href="{{ category.get_absolute_url }}">{{ category.name }}</a>
+                            </div>
+                        </div>
+                    {% endif %}
+                {% endfor %}
+
+            </div>
+        </div>
+    </div>
+    <!-- End Categories -->
+
+    <!-- Start Products  -->
+    <div class="products-box">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="title-all text-center">
+                        <h1>محصولات پربازدید و جدید</h1>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="special-menu text-center">
+                        <div class="button-group filter-button-group">
+                            <button class="active" data-filter="*">همش</button>
+                            <button data-filter=".top-featured">تازه ها</button>
+                            <button data-filter=".best-seller">بیشتر دیده شده</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row special-list">
+                {% for p in product %}
+                    {% if p.product.seen > 10 %}
+                    <div class="col-lg-3 col-md-6 special-grid best-seller">
+                        <div class="products-single fix">
+                            <div class="box-img-hover">
+                                <div class="type-lb">
+                                    <a href="{{ p.get_absolute_url }}"><p class="sale">پربازدید</p></a>
+                                </div>
+                                <img  src="{{ p.product.image.url }}" class="img-fluid" alt="Image">
+                                <div class="mask-icon">
+                                    <ul>
+
+                                        <li><a href="#" data-toggle="tooltip" data-placement="right"
+                                               title="Add to Wishlist"><i class="far fa-heart"></i></a></li>
+                                    </ul>
+                                    <a class="cart" href="#">Add to Cart</a>
+                                </div>
+                            </div>
+                            <div  class="why-text">
+                                <h4 ><a href="{{ p.get_absolute_url }}">{{ p.product.name }}</a></h4>
+                                <h5> {{ p.price }}</h5>
+                            </div>
+                        </div>
+                    </div>
+                    {% endif %}
+                {% endfor %}
+
+
+
+                {% for p in product %}
+                    {% if p.product.seen < 10 %}
+                    <div class="col-lg-3 col-md-6 special-grid top-featured">
+                        <div class="products-single fix">
+                            <div class="box-img-hover">
+                                <div class="type-lb">
+                                    <a href="{{ p.get_absolute_url }}"><p class="sale">جدید</p></a>
+                                </div>
+                                <img src="{{ p.product.image.url }}" class="img-fluid" alt="Image">
+                                <div class="mask-icon">
+                                    <ul>
+
+                                        <li><a href="#" data-toggle="tooltip" data-placement="right"
+                                               title="Add to Wishlist"><i class="far fa-heart"></i></a></li>
+                                    </ul>
+                                    <a class="cart" href="#">Add to Cart</a>
+                                </div>
+                            </div>
+                            <div class="why-text">
+                                <h4 ><a href="{{ p.get_absolute_url }}">{{ p.product.name }}</a></h4>
+                                <h5> {{ p.price }}</h5>
+                            </div>
+                        </div>
+                    </div>
+                    {% endif %}
+                {% endfor %}
+
+
+            </div>
+        </div>
+    </div>>
+
+    <!-- End Products  -->
+
+{% endblock %}

@@ -1,0 +1,123 @@
+{% extends 'base/base.html' %}
+{% load static %}
+
+{% block title %} userprofile {% endblock %}
+
+{% block content %}
+
+    <div class="container mt-5 mb-5" dir="rtl">
+        <div class="row border border-info rounded mb-5">
+            <div class=" mx-5">
+                <ul>
+                    {% if user.avatar %}
+                        <li>
+
+                            <img style="width: 120px;height: 120px;margin:30px 0 20px 0"
+                                 src="{{ user.avatar.url }}">
+                        </li>
+                    {% else %}
+                        <li>
+                            <img style="width: 120px;height: 120px;margin:30px 0 20px 0"
+                                 src="https://upload.wikimedia.org/wikipedia/commons/6/67/User_Avatar.png">
+                        </li>
+                    {% endif %}
+
+                </ul>
+            </div>
+            <div class="mx-5 text-right">
+                <ul>
+                    <li>
+                        <label>پست الکترونیک </label>
+                        <h1>{{ user.email }}</h1>
+                    </li>
+
+                    <li>
+                        <label>شماره تلفن </label>
+                        <h1>{{ user.mobile }}</h1>
+                    </li>
+                </ul>
+            </div>
+            <div class="mx-5 text-right">
+                <ul>
+                    {% if user.first_name %}
+                        <li>
+                            <label>نام و نام خانوادگی </label>
+                            <h1>{{ user.first_name }}</h1>
+                        </li>
+                    {% else %}
+                        <li>
+                            <label>نام و نام خانوادگی </label>
+                            <h1>None</h1>
+                        </li>
+                    {% endif %}
+
+
+                    <li>
+                        <label>تاریخ عضویت</label>
+                        <h1>{{ user.date_joined|date:"Y/M/d"|lower }}</h1>
+                    </li>
+                </ul>
+            </div>
+            <div class="mx-5 text-right">
+                <ul>
+                    <li>
+                        <label>دریافت خبرنامه </label>
+                        <h1> خیر </h1>
+                    </li>
+
+                    <li>
+                        <label>شماره کارت</label>
+                        <h1> xxxxxxxxxxxxx </h1>
+                    </li>
+                </ul>
+            </div>
+
+        </div>
+    {% if address != None %}
+    <div class="container text-right">
+        <h4> آدرس</h4>
+        {{ address.city }}-{{ address.street }}-{{ address.alley }}
+    </div>
+    {% endif %}
+    <div class="container text-center "><abbr title="می توانید از طریق این لینک پروفایل خود را ویرایش کنید">
+        <a href="{% url 'userprofileupdate' user.id %}"><h3>ویرایش پروفایل </h3></a></abbr></div>
+
+        <div class="row border border-info mb-5 mt-5">
+            <div class="mx-5">
+                <ul class="list-group col-xl-2 text-right ">
+                    <li class="list-group-item "><h3 class="btn btn-outline-info">
+                        <a href="{% url 'basketlist' %}">سفارشات من</a></h3></li>
+                    <li class="list-group-item btn"><h3 class="btn btn-outline-info">علاقه مندی ها</h3></li>
+                    <li class="list-group-item btn"><h3 class="btn btn-outline-info">نشانی ها</h3></li>
+                    <li class="list-group-item btn"><h3 class="btn btn-outline-info">نظرات</h3></li>
+                    <li class="list-group-item btn"><h3 class="btn btn-outline-info">
+                        <a href="{% url 'change_password' %}">
+                        تغییر رمز عبور
+                    </a></h3></li>
+                </ul>
+            </div>
+            <div class="w-50 " style="margin-right: 200px">
+                <table class="table table-hover">
+                    <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">شماره سفارش</th>
+                        <th scope="col">تاریخ ثبت سفارش</th>
+                        <th scope="col">مبلغ قابل پرداخت</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <th scope="row">1</th>
+                        <td>001</td>
+                        <td>dec/02/2020</td>
+                        <td>2000</td>
+                    </tr>
+
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+    </div>
+{% endblock %}

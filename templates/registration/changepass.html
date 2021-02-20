@@ -1,0 +1,27 @@
+{% extends 'base/base.html' %}
+{% load static %}
+{% block title %}تغییر رمز عبور{% endblock %}
+
+
+
+
+
+{% block content %}
+
+
+        <h1 class="text-center reg-title">تغییر رمز عبور</h1>
+    <div class="container" dir="rtl" id="regis-back">
+
+        <div class="row">
+
+            <div class="col-12">
+                <form method="post" >
+                    {% csrf_token %}
+                    {% include 'component/passchangeform.html' %}
+                    <input type="submit" class="btn btn-outline-primary" value="تغییر رمز عبور">
+                </form>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

@@ -1,0 +1,131 @@
+<!-- Start Main Top -->
+<header class="main-header" dir="rtl">
+    <!-- Start Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light navbar-default bootsnav">
+        <div class="container">
+            <!-- Start Header Navigation -->
+            <div class="navbar-header">
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-menu"
+                        aria-controls="navbars-rs-food" aria-expanded="false" aria-label="Toggle navigation">
+                    <i class="fa fa-bars"></i>
+                </button>
+
+            </div>
+            <!-- End Header Navigation -->
+
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="navbar-menu">
+                <ul class="nav navbar-nav ml-auto" data-in="fadeInDown" data-out="fadeOutUp">
+                    <li class="nav-item"><a class="nav-link" href="{% url 'home' %}">صفحه اصلی</a></li>
+                    <li class="dropdown megamenu-fw">
+                        <a href="#" class="nav-link dropdown-toggle arrow" data-toggle="dropdown">محصولات</a>
+                        <ul class="dropdown-menu megamenu-content" role="menu">
+                            <li>
+                                <div class="row">
+                                    {% for item in categories %}
+                                        <div class="col-menu col-md-2">
+                                            {% if item.parent == None %}
+                                                <a href="{{ item.get_absolute_url }}"><h6
+                                                        class="title">{{ item.name }}</h6></a>
+                                            {% endif %}
+                                            <div class="content">
+                                                <ul class="menu-col">
+                                                    {% for ineritem in categories %}
+                                                        {% if ineritem.parent == item %}
+                                                            <li>
+                                                                <a href="{{ ineritem.get_absolute_url }}">{{ ineritem.name }}</a>
+                                                            </li>
+                                                        {% endif %}
+                                                    {% endfor %}
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    {% endfor %}
+                                    <!-- end col-3 -->
+
+
+                                    <!-- end col-3 -->
+                                </div>
+                                <!-- end row -->
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="nav-item"><a class="nav-link" href="service.html">سرویس های ما</a></li>
+                    <li class="nav-item"><a class="nav-link" href="contact-us.html">ارتباط با ما</a></li>
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+
+            <!-- Start Atribute Navigation -->
+            <div class="attr-nav">
+                <ul>
+                    {% if request.user.is_authenticated %}
+                        <li class="header-log">
+
+                            <div class="card" tabindex="0">
+                              <span class="infoicon">
+                                  <i class="fa fa-user"></i>
+                              </span>
+                                <p>{{ request.user.email }}</p>
+                                <p class="description">
+                                <p><a href="{{ request.user.get_absolute_url }}"> <i class="fa fa-user-circle"></i> حساب
+                                    کابری</a></p>
+                                <p class="ml-3"><a href="/basket/list"> <i class="fa fa-shopping-basket"></i> سبد خرید
+                                    </a></p>
+                                <p class="header-logout"><a href="{% url 'logout' %}"> <i class="fa fa-times-circle"
+                                                                                          aria-hidden="true"></i> خارج
+                                    شدن </a></p>
+                                </p>
+
+                            </div>
+
+                        </li>
+                    {% else %}
+                        <li><a class="btn"  href="{% url 'login' %}"> ورود به حساب</a></li>
+
+                    {% endif %}
+
+                    <li class="search"><a href="#"><i class="fa fa-search"></i></a></li>
+                    <li class="side-menu"><a href="#">
+                        <i class="fa fa-shopping-bag"></i>
+                        <span class="badge">0</span>
+                    </a></li>
+                </ul>
+            </div>
+            <!-- End Atribute Navigation -->
+        </div>
+        <!-- Start Side Menu -->
+        <div class="side">
+            <a href="#" class="close-side"><i class="fa fa-times"></i></a>
+            <li class="cart-box">
+                <ul class="cart-list">
+
+                    <li>
+                        <a href="#" class="photo"><img src="images/img-pro-01.jpg" class="cart-thumb" alt=""/></a>
+                        <h6><a href="#">Delica omtantur </a></h6>
+                        <p>1x - <span class="price">$80.00</span></p>
+                    </li>
+
+
+                </ul>
+            </li>
+        </div>
+        <!-- End Side Menu -->
+    </nav>
+    <!-- End Navigation -->
+</header>
+<!-- End Main Top -->
+
+<!-- Start Top Search -->
+<div class="top-search">
+    <div class="container">
+        <form action="{% url 'searchbar' %}" method="get" class="form-inline my-2 my-lg-0 d-sm-none d-md-block">
+            <input class="form-control " name="search" type="search" placeholder="Search" aria-label="Search">
+            <button class="btn btn-outline-info my-2 " type="submit">Search</button>
+{#            <span class="input-group-addon close-search text-left"><i class="fa fa-times"></i></span>#}
+        </form>
+
+    </div>
+</div>
+<!-- End Top Search -->

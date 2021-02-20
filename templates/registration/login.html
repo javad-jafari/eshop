@@ -1,0 +1,37 @@
+{% extends 'base/base.html' %}
+{% load static %}
+
+
+{% block content %}
+    <h1 class="text-center" id="login-form-title">صفحه ورود به سایت</h1>
+    <div class="container" >
+
+        <div class="col-12 " id="login-form">
+            <form action="{% url 'login' %}" method="post" id="login-form-in">
+
+                {% csrf_token %}
+                {{ form.username }}
+                <label for="{{ form.username.id_for_label }}" class="label">
+                    ایمیل
+                </label>
+
+                <p class="help is-danger">{{ form.username.errors }}</p>
+
+                {{ form.password }}
+                <label for="{{ form.password.id_for_label }}" class="label">
+                    رمز عبور
+                </label>
+
+
+
+                <p class="help is-danger">{{ form.password.errors }}</p>
+
+                <input type="submit" value="ورود" class="btn btn-outline-info text-dark" id='btn-login'>
+
+            </form>
+
+        </div>
+        <div class="container"><a href="{% url 'register' %}" class="btn btn-outline-info"> حساب کاربری نداری ؟</a></div>
+    </div>
+
+{% endblock %}
