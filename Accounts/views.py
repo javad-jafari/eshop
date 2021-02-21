@@ -13,6 +13,7 @@ from django.views.generic import RedirectView, DetailView, UpdateView, FormView
 
 from Accounts.forms import UserThirdRegistrationForm, UserUpdateForm
 from Accounts.models import Address
+from Orders.models import BasketItem, Basket
 from Products.models import Category
 
 User = get_user_model()
@@ -76,7 +77,12 @@ class UserProfileView(LoginRequiredMixin, DetailView):
         try:
             context["address"] = get_object_or_404(Address, user__id=pk)
         except:
-            context["address"] = "None"
+            context["address"] = None
+
+        try:
+            context["orderes"] = Basket.objects.filter(user_id=pk, ordered=True)
+        except:
+            context["orderes"] = None
         return context
 
 
@@ -85,7 +91,6 @@ class ProfileUpdate(LoginRequiredMixin, UpdateView):
     fields = ['first_name', "last_name", 'mobile']
     template_name = 'registration/updateuser.html'
     pk_url_kwarg = 'user_id'
-
 
 
 def change_password(request):

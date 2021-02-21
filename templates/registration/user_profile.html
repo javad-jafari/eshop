@@ -73,14 +73,19 @@
             </div>
 
         </div>
-    {% if address != None %}
-    <div class="container text-right">
-        <h4> آدرس</h4>
-        {{ address.city }}-{{ address.street }}-{{ address.alley }}
-    </div>
-    {% endif %}
-    <div class="container text-center "><abbr title="می توانید از طریق این لینک پروفایل خود را ویرایش کنید">
-        <a href="{% url 'userprofileupdate' user.id %}"><h3>ویرایش پروفایل </h3></a></abbr></div>
+
+        <div class="container text-right">
+
+            <h4> آدرس</h4>
+            {% if address != None %}
+                {{ address.city }}-{{ address.street }}-{{ address.alley }}
+            {% else %}
+                <p>---------------------------</p>
+            {% endif %}
+        </div>
+
+        <div class="container text-center "><abbr title="می توانید از طریق این لینک پروفایل خود را ویرایش کنید">
+            <a href="{% url 'userprofileupdate' user.id %}"><h3>ویرایش پروفایل </h3></a></abbr></div>
 
         <div class="row border border-info mb-5 mt-5">
             <div class="mx-5">
@@ -92,8 +97,11 @@
                     <li class="list-group-item btn"><h3 class="btn btn-outline-info">نظرات</h3></li>
                     <li class="list-group-item btn"><h3 class="btn btn-outline-info">
                         <a href="{% url 'change_password' %}">
-                        تغییر رمز عبور
-                    </a></h3></li>
+                            تغییر رمز عبور
+                        </a></h3></li>
+                    {% if request.user.is_staff %}
+                        <li class="list-group-item btn"><h3 class="btn btn-outline-info">پنل فروشنده</h3></li>
+                    {% endif %}
                 </ul>
             </div>
             <div class="w-50 " style="margin-right: 200px">
@@ -107,12 +115,25 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <tr>
-                        <th scope="row">1</th>
-                        <td>001</td>
-                        <td>dec/02/2020</td>
-                        <td>2000</td>
-                    </tr>
+                    {% if orderes is not None %}
+                        {% for item in orderes %}
+                            <tr>
+                                <th scope="row">1</th>
+                                <td>{{ item.id }}</td>
+                                <td>{{ item.create_at }}</td>
+                                <td>{{ item.sum_total }}</td>
+                            </tr>
+                        {% endfor %}
+                    {% else %}
+                        <tr>
+                            <th scope="row">1</th>
+                            <td>#</td>
+                            <td>#</td>
+                            <td>#</td>
+                        </tr>
+
+                    {% endif %}
+
 
                     </tbody>
                 </table>
