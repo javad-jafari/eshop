@@ -50,7 +50,7 @@
                                         </td>
 
                                         <td class="total-pr">
-                                            <p id="price{{ item.id }}"></p>
+                                            <p id="price{{ item.id }}">{{ item.total_price }}</p>
                                         </td>
                                         <td class="remove-pr">
                                             <a href="{% url 'removebasketitem' item.id %}">
@@ -92,7 +92,7 @@
                         <h3>فاکتور پرداخت</h3>
                         <div class="d-flex">
                             <h4>قیمت کل</h4>
-                            <div class="ml-auto font-weight-bold price_total"></div>
+                            <div class="ml-auto font-weight-bold price_total">{{ basket.sum_total }}</div>
                         </div>
                         <div class="d-flex">
                             <h4>تخفیف</h4>
@@ -103,11 +103,16 @@
 
                         <div class="d-flex gr-total">
                             <h5>قیمت نهایی</h5>
-                            <div class="ml-auto h5 price_total" > </div>
+                            <div class="ml-auto h5 price_total" >{{ basket.sum_total }} </div>
                         </div>
                         <hr>
                     </div>
                 </div>
+                <form method="post" action="{% url 'checkout' %}">
+                    {% csrf_token %}
+                    {{ order_form.Basket_id }}
+                <button type="submit">ثبت</button>
+                </form>
                 <div class="col-12 d-flex shopping-box"><a href="checkout.html"
                                                            class="ml-auto btn hvr-hover">ثبت خرید‌</a></div>
             </div>

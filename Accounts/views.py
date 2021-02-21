@@ -1,5 +1,6 @@
 from django.contrib import messages
 from django.contrib.auth import logout, get_user_model, update_session_auth_hash
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.views import LoginView
 from django.http import Http404
@@ -81,7 +82,7 @@ class UserProfileView(LoginRequiredMixin, DetailView):
 
         try:
             context["orderes"] = Basket.objects.filter(user_id=pk, ordered=True)
-        except:
+        except Basket.DoesNotExist:
             context["orderes"] = None
         return context
 
@@ -93,14 +94,17 @@ class ProfileUpdate(LoginRequiredMixin, UpdateView):
     pk_url_kwarg = 'user_id'
 
 
+
+@login_required(login_url='/accounts/login/')
 def change_password(request):
+
     if request.method == 'POST':
         form = PasswordChangeForm(request.user, request.POST)
         if form.is_valid():
             user = form.save()
             update_session_auth_hash(request, user)  # Important!
             messages.success(request, 'Your password was successfully updated!')
-            return redirect('userprofile')
+            return redirect(f'/accounts/userprofile/{user.id}')
         else:
             messages.error(request, 'Please correct the error below.')
     else:

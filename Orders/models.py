@@ -65,7 +65,7 @@ class Basket(models.Model):
 
 class BasketItem(models.Model):
     basket = models.ForeignKey(Basket, related_name='itemsbasket', related_query_name='itemsbasket', verbose_name=_(
-        "basket"), on_delete=models.CASCADE)
+        "basket"), on_delete=models.CASCADE ,blank=True)
     shop_product = models.ForeignKey(ShopProduct, related_name='itemsshop_product',
                                      related_query_name='itemsshop_product', verbose_name=_(
             "shop_product"), on_delete=models.CASCADE)
