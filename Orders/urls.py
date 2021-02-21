@@ -1,5 +1,5 @@
 from django.urls import path, re_path
-from .views import add_to_basket, basketlist, remove_item
+from .views import add_to_basket, basketlist, remove_item,update_item
 
 urlpatterns = [
 
@@ -7,5 +7,6 @@ urlpatterns = [
     path('list/', basketlist, name='basketlist'),
     path('list/additem/', add_to_basket, name='addbasketitem'),
     path('removeitem/<detail_id>', remove_item, name='removebasketitem'),
-    
+    path('updateitem/', update_item, name='updatebasketitem'),
+
 ]

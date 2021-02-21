@@ -1,6 +1,8 @@
+import json
+
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.http import Http404
+from django.http import Http404, HttpResponse
 from django.shortcuts import render, redirect
 
 # Create your views here.
@@ -52,20 +54,37 @@ def add_to_basket(request):
         if quantity < 0:
             quantity = 1
         shop_product = ShopProduct.objects.get(product_id=product_id, shop_id=shop_id)
-
-        basket.itemsbasket.create(shop_product_id=shop_product.id, price=shop_product.price, quantity=quantity)
+        if basket.itemsbasket.filter(shop_product_id=shop_product.id).exists():
+            pass
+        else:
+            basket.itemsbasket.create(shop_product_id=shop_product.id, price=shop_product.price, quantity=quantity)
         return redirect('basketlist')
 
     return redirect('/')
 
+
 @login_required(login_url='/accounts/login')
-def remove_item(request,*args,**kwargs):
+def remove_item(request, *args, **kwargs):
     detail_id = kwargs.get('detail_id')
 
     if detail_id is not None:
-        basket_item = BasketItem.objects.get_queryset().get(id=detail_id ,basket__user_id=request.user.id)
+        basket_item = BasketItem.objects.get_queryset().get(id=detail_id, basket__user_id=request.user.id)
         if basket_item is not None:
             basket_item.delete()
             return redirect('/basket/list')
     raise Http404()
 
+
+@csrf_exempt
+def update_item(request):
+    data = json.loads(request.body)
+    user = request.user.id
+    basket = BasketItem.objects.get(id=data['item_id'], basket__user_id=user)
+    basket.quantity += data['condition']
+    basket.save()
+    if basket.quantity <1:
+        basket.delete()
+
+    response = {"counters": basket.quantity ,'price_item': basket.total_price(),'price_total':basket.basket.sum_total()}
+
+    return HttpResponse(json.dumps(response), status=201)

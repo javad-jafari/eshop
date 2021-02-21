@@ -42,11 +42,15 @@
                                         <td class="price-pr">
                                             <p>{{ item.shop_product.price }} </p>
                                         </td>
-                                        <td class="quantity-box"><input type="number" size="1"
-                                                                        value="{{ item.quantity }}" min="0" step="1"
-                                                                        class="c-input-text qty text"></td>
+
+                                        <td class="quantity-box inline-group">
+                                            <button onclick="update({{ item.id }})">+</button>
+                                            <small id="up{{ item.id }}">{{ item.quantity }}</small>
+                                            <button onclick="update({{ item.id }},-1)">-</button>
+                                        </td>
+
                                         <td class="total-pr">
-                                            <p>{{ item.total_price }}</p>
+                                            <p id="price{{ item.id }}"></p>
                                         </td>
                                         <td class="remove-pr">
                                             <a href="{% url 'removebasketitem' item.id %}">
@@ -88,7 +92,7 @@
                         <h3>فاکتور پرداخت</h3>
                         <div class="d-flex">
                             <h4>قیمت کل</h4>
-                            <div class="ml-auto font-weight-bold">{{ total_price }}</div>
+                            <div class="ml-auto font-weight-bold price_total"></div>
                         </div>
                         <div class="d-flex">
                             <h4>تخفیف</h4>
@@ -99,7 +103,7 @@
 
                         <div class="d-flex gr-total">
                             <h5>قیمت نهایی</h5>
-                            <div class="ml-auto h5"> {{ total_price }}</div>
+                            <div class="ml-auto h5 price_total" > </div>
                         </div>
                         <hr>
                     </div>
@@ -111,4 +115,36 @@
         </div>
     </div>
     <!-- End Cart -->
+{% endblock %}
+
+
+
+
+
+
+
+
+
+
+
+{% block javascript %}
+
+    <script>
+        function update(basketitemId, condition=1) {
+            const data = JSON.stringify({item_id: basketitemId, condition})
+            console.log(data)
+             $.ajax({
+                type: "post",
+                url: "{% url 'updatebasketitem' %}",
+                data: data,
+                success: function (response) {
+                    const data = JSON.parse(response)
+                    console.log(data)
+                    $(`#up${basketitemId}`).text(data.counters);
+                    $(`#price${basketitemId}`).text(data.price_item);
+                    $(`.price_total`).text(data.price_total);
+                }
+            });
+        }
+    </script>
 {% endblock %}

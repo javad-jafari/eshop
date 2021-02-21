@@ -82,15 +82,16 @@
 
                         </li>
                     {% else %}
-                        <li><a class="btn"  href="{% url 'login' %}"> ورود به حساب</a></li>
+                        <li><a class="fa fa-user-alt"  href="{% url 'login' %}"> ورود به حساب کاربری</a></li>
 
                     {% endif %}
 
                     <li class="search"><a href="#"><i class="fa fa-search"></i></a></li>
+                {% if request.user.is_authenticated %}
                     <li class="side-menu"><a href="#">
                         <i class="fa fa-shopping-bag"></i>
                         <span class="badge">0</span>
-                    </a></li>
+                    </a></li> {% endif %}
                 </ul>
             </div>
             <!-- End Atribute Navigation -->
