@@ -17,13 +17,12 @@ from Orders.forms import BasketDetailForm, OrderedForm
 
 @login_required(login_url='/accounts/login')
 def basketlist(request):
-    context = {'basket': None, 'detail': None, 'categories': Category.objects.all()}
+    context = {'basket': None, 'detail': None}
 
     open_basket: Basket = Basket.objects.filter(user_id=request.user.id, ordered=False).first()
     if open_basket is not None:
         context['basket'] = open_basket
         context['detail'] = open_basket.itemsbasket.all()
-        context['categories'] = Category.objects.all()
         context['total_price'] = open_basket.sum_total()
         context['order_form'] = OrderedForm(initial={'Basket_id': open_basket.id})
 
@@ -45,7 +44,7 @@ def add_to_basket(request):
         if quantity < 0:
             quantity = 1
         shop_product = ShopProduct.objects.get(product_id=product_id, shop_id=shop_id)
-        if basket.itemsbasket_set.filter(shop_product_id=shop_product.id).exists():
+        if basket.itemsbasket.filter(shop_product_id=shop_product.id).exists():
             pass
         else:
             basket.itemsbasket.create(shop_product_id=shop_product.id, price=shop_product.price, quantity=quantity)
@@ -102,7 +101,6 @@ def finished_order(request):
     if finish is not None:
         context['basket'] = finish
         context['detail'] = finish.itemsbasket.all()
-        context['categories'] = Category.objects.all()
         context['address'] = Address.objects.filter(user_id=request.user.id).first()
         context['total_price'] = finish.sum_total()
 

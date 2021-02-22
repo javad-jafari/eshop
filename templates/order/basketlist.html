@@ -103,7 +103,7 @@
 
                         <div class="d-flex gr-total">
                             <h5>قیمت نهایی</h5>
-                            <div class="ml-auto h5 price_total" >{{ basket.sum_total }} </div>
+                            <div class="ml-auto h5 price_total">{{ basket.sum_total }} </div>
                         </div>
                         <hr>
                     </div>
@@ -111,10 +111,11 @@
                 <form method="post" action="{% url 'checkout' %}">
                     {% csrf_token %}
                     {{ order_form.Basket_id }}
-                <button type="submit">ثبت</button>
+                    <div class="col-12 d-flex shopping-box" dir="rtl">
+                        <button class="ml-auto btn hvr-hover text-white" type="submit"> ثبت سفارش</button>
+                    </div>
                 </form>
-                <div class="col-12 d-flex shopping-box"><a href="checkout.html"
-                                                           class="ml-auto btn hvr-hover">ثبت خرید‌</a></div>
+
             </div>
 
         </div>
@@ -135,10 +136,10 @@
 {% block javascript %}
 
     <script>
-        function update(basketitemId, condition=1) {
+        function update(basketitemId, condition = 1) {
             const data = JSON.stringify({item_id: basketitemId, condition})
             console.log(data)
-             $.ajax({
+            $.ajax({
                 type: "post",
                 url: "{% url 'updatebasketitem' %}",
                 data: data,

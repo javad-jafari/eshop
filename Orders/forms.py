@@ -8,4 +8,4 @@ class BasketDetailForm(forms.Form):
 
 
 class OrderedForm(forms.Form):
-    Basket_id = forms.CharField()
+    Basket_id = forms.IntegerField(widget=forms.HiddenInput())

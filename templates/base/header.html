@@ -1,3 +1,4 @@
+
 <!-- Start Main Top -->
 <header class="main-header" dir="rtl">
     <!-- Start Navigation -->
@@ -90,7 +91,7 @@
                 {% if request.user.is_authenticated %}
                     <li class="side-menu"><a href="#">
                         <i class="fa fa-shopping-bag"></i>
-                        <span class="badge">0</span>
+                        <span class="badge">{{ bas_d.count }}</span>
                     </a></li> {% endif %}
                 </ul>
             </div>
@@ -101,12 +102,16 @@
             <a href="#" class="close-side"><i class="fa fa-times"></i></a>
             <li class="cart-box">
                 <ul class="cart-list">
-
+                {% for b in bas_d %}
                     <li>
-                        <a href="#" class="photo"><img src="images/img-pro-01.jpg" class="cart-thumb" alt=""/></a>
-                        <h6><a href="#">Delica omtantur </a></h6>
-                        <p>1x - <span class="price">$80.00</span></p>
+                        <a href="#" class="photo"><img src="{{ b.shop_product.product.image.url }}" class="cart-thumb" alt=""/></a>
+                        <h6><p>{{ b.shop_product.product.name }}
+                        <small>({{ b.shop_product.shop.name }}) </small>
+                        </p></h6>
+
+                        <p>تعداد({{ b.quantity }}) - <span class="price">قیمت:  {{ b.total_price }}</span></p>
                     </li>
+                    {% endfor %}
 
 
                 </ul>

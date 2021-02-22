@@ -29,14 +29,13 @@ class ProductDetailView(DetailView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["categories"] = Category.objects.all()
         context["comments"] = Comment.objects.filter(product__slug=self.kwargs.get('product_slug'))
         context["metas"] = ProductMeta.objects.filter(product__slug=self.kwargs.get('product_slug'))
         context['form'] = CommentForm()
         slug1 = self.kwargs.get('product_slug')
         slug2 = self.kwargs.get('shop_slug')
         item = get_object_or_404(ShopProduct, product__slug=slug1, shop__slug=slug2)
-        context['basketform'] = BasketDetailForm(initial={'product_id':item.product_id,'shop_id':item.shop_id })
+        context['basketform'] = BasketDetailForm(initial={'product_id': item.product_id, 'shop_id': item.shop_id})
         return context
 
 
@@ -50,7 +49,7 @@ class CategoryDetailView(ListView):
         slug = self.kwargs.get('category_slug')
         category = get_object_or_404(Category.objects.filter(), slug=slug)
         context["shopproducts"] = ShopProduct.objects.filter(product__category=category)
-        context["categories"] = Category.objects.all()
+
         return context
 
 
@@ -92,11 +91,6 @@ class SearchResultsView(ListView):
     template_name = 'search/searchbar.html'
     paginate_by = 3
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context["categories"] = Category.objects.all()
-        return context
-
     def get_queryset(self):
         query = self.request.GET.get('search')
         object_list = ShopProduct.objects.filter(
@@ -111,11 +105,6 @@ class SearchCatView(ListView):
     template_name = 'search/categorysearch.html'
     paginate_by = 3
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context["categories"] = Category.objects.all()
-        return context
-
     def get_queryset(self):
         query = self.request.GET.get('categorysearch')
         object_list = ShopProduct.objects.filter(Q(product__category__name__contains=query))
@@ -127,14 +116,7 @@ class SearchBrandView(ListView):
     template_name = 'search/brandsearch.html'
     paginate_by = 3
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context["categories"] = Category.objects.all()
-        return context
-
     def get_queryset(self):
         query = self.request.GET.get('checkname')
         object_list = ShopProduct.objects.filter(Q(product__category__name__contains=query))
         return object_list
-
-
