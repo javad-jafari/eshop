@@ -1,0 +1,20 @@
+{% extends 'base/base.html' %}
+{% load static %}
+{% block title %}{% endblock %}
+{% block content %}
+    <h1 class="text-center reg-title">فرم تعریف محصول</h1>
+    <div class="container" dir="rtl" id="regis-back">
+
+        <div class="row">
+
+            <div class="col-12">
+                <form method="post" action="{% url 'sellerproduct' user.id %}" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    {% include 'component/form.html' %}
+                    <input type="submit" class="btn btn-outline-primary" value="ثبت تغییرات">
+                </form>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

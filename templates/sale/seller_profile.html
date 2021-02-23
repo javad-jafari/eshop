@@ -1,0 +1,58 @@
+{% extends 'base/base.html' %}
+{% load static %}
+{% block title %}{% endblock %}
+{% block content %}
+
+    <div class="container mb-5 mt-5 col-12" dir="rtl">
+    <div class="container">
+        <h4 class="text-center fa fa-user bg-warning"> {{ request.user }}</h4>
+
+    </div>
+        <div class="row mt-5 mb-5">
+            <a href="{% url 'sellerproduct' request.user.id %}" class="btn btn-outline-info mx-5">ایجاد محصول</a>
+            <a href="{% url 'sellerproductmetas' request.user.id %}" class="btn btn-outline-info mx-5">ایجاد ویژگی
+                محصول</a>
+            <a href="{% url 'sellershopproduct' request.user.id %}" class="btn btn-outline-info mx-5">ثبت محصول برای
+                فروشگاه</a>
+        </div>
+        <hr>
+        <h3 class="text-right">محصولات تایید شده فروشگاه شما</h3>
+        <hr>
+        <div class="row mt-5 mb-5">
+            {% for s in shop_product %}
+                <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
+                    <div class="shop-cat-box">
+                        <img class="img-fluid" style="height: 200px" src="{{ s.product.image.url }}" alt=""/>
+                        <a class="btn hvr-hover" href="{{ s.get_absolute_url }}">{{ s.product.name }}</a>
+                    </div>
+                </div>
+            {% endfor %}
+
+        </div>
+        <hr>
+            <h3 class="text-right">نظرات ثبت شده برای محصولات شما</h3>
+        <hr>
+        <div class="container col-lg-8 col-md-8 col-sm-12">
+            {% for comment in comments %}
+                <div class="row mt-5 mb-5" style="border: #0c5460 solid">
+                    <div class="container">
+                        <small>برای  {{ comment.product }}</small>
+                        <h3>{{ comment.author }}</h3>
+                        <p>{{ comment.content }}</p>
+                    </div>
+
+
+                    <div>
+                        like:<span id='like_counter{{ comment.id }}'>{{ comment.like_count }}</span>
+                        dislike:<span id='dislike_counter{{ comment.id }}'>{{ comment.dislike_count }}</span>
+                    </div>
+                    <div class="mx-5">
+                        <button class="bg-success" onclick="likecomment({{ comment.id }})"></button>
+                        <button class="bg-danger" onclick="likecomment({{ comment.id }},false)"></button>
+                    </div>
+
+
+                </div>
+            {% endfor %}</div>
+    </div>
+{% endblock %}

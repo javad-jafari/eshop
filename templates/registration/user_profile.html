@@ -76,9 +76,12 @@
 
         <div class="container text-right">
 
-            <h4> آدرس</h4>
+            <h4> آدرس ها</h4>
             {% if address != None %}
-                {{ address.city }}-{{ address.street }}-{{ address.alley }}
+                {% for f in address %}
+                   <p> {{ forloop.counter }}-
+                {{ f.city }}-{{ f.street }}-{{ f.alley }}</p>
+                {% endfor %}
             {% else %}
                 <p>---------------------------</p>
             {% endif %}
@@ -92,15 +95,17 @@
                 <ul class="list-group col-xl-2 text-right ">
                     <li class="list-group-item "><h3 class="btn btn-outline-info">
                         <a href="{% url 'basketlist' %}">سفارشات من</a></h3></li>
-                    <li class="list-group-item btn"><h3 class="btn btn-outline-info">علاقه مندی ها</h3></li>
+
                     <li class="list-group-item btn"><h3 class="btn btn-outline-info">نشانی ها</h3></li>
-                    <li class="list-group-item btn"><h3 class="btn btn-outline-info">نظرات</h3></li>
                     <li class="list-group-item btn"><h3 class="btn btn-outline-info">
                         <a href="{% url 'change_password' %}">
                             تغییر رمز عبور
                         </a></h3></li>
-                    {% if request.user.is_staff %}
-                        <li class="list-group-item btn"><h3 class="btn btn-outline-info">پنل فروشنده</h3></li>
+                    {% if request.groups is seller %}
+                        <li class="list-group-item btn"><h3 class="btn btn-outline-info">
+                            <a href="{% url 'sellerprofile' %}"> پنل فروشنده</a>
+
+                        </h3></li>
                     {% endif %}
                 </ul>
             </div>
@@ -117,8 +122,9 @@
                     <tbody>
                     {% if orderes is not None %}
                         {% for item in orderes %}
+
                             <tr>
-                                <th scope="row">1</th>
+                                <th scope="row">{{ forloop.counter }}</th>
                                 <td>{{ item.id }}</td>
                                 <td>{{ item.create_at }}</td>
                                 <td>{{ item.sum_total }}</td>

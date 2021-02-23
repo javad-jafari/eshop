@@ -3,6 +3,7 @@ from django.contrib.auth import logout, get_user_model, update_session_auth_hash
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.views import LoginView
+from django.contrib.messages.views import SuccessMessageMixin
 from django.http import Http404
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.forms import PasswordChangeForm
@@ -10,12 +11,12 @@ from django.contrib.auth.forms import PasswordChangeForm
 
 from django.urls import reverse
 from django.views import View
-from django.views.generic import RedirectView, DetailView, UpdateView, FormView
+from django.views.generic import RedirectView, DetailView, UpdateView, FormView, CreateView, TemplateView
 
 from Accounts.forms import UserThirdRegistrationForm, UserUpdateForm
-from Accounts.models import Address
+from Accounts.models import Address, Shop
 from Orders.models import BasketItem, Basket
-from Products.models import Category
+from Products.models import Category, Product, ProductMeta, ShopProduct, Comment
 
 User = get_user_model()
 
@@ -32,18 +33,8 @@ class SignView(LoginView):
     template_name = 'registration/login.html'
     redirect_authenticated_user = '/'
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context["categories"] = Category.objects.all()
-        return context
-
 
 class RegisterView(View):
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context["categories"] = Category.objects.all()
-        return context
 
     def get(self, request):
         if request.user.is_authenticated:
@@ -74,9 +65,8 @@ class UserProfileView(LoginRequiredMixin, DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         pk = self.kwargs.get('user_id')
-        context["categories"] = Category.objects.all()
         try:
-            context["address"] = get_object_or_404(Address, user__id=pk)
+            context["address"] = Address.objects.filter(user__id=pk)
         except:
             context["address"] = None
 
@@ -94,10 +84,8 @@ class ProfileUpdate(LoginRequiredMixin, UpdateView):
     pk_url_kwarg = 'user_id'
 
 
-
 @login_required(login_url='/accounts/login/')
 def change_password(request):
-
     if request.method == 'POST':
         form = PasswordChangeForm(request.user, request.POST)
         if form.is_valid():
@@ -112,3 +100,41 @@ def change_password(request):
     return render(request, 'registration/changepass.html', {
         'form': form
     })
+
+
+class SellerProductView(LoginRequiredMixin, CreateView):
+    model = Product
+    fields = '__all__'
+    template_name = 'sale/seller_product.html'
+
+    def get_success_url(self):
+        return reverse('userprofile', kwargs={'user_id': self.request.user.id})
+
+
+class SellerProductMetaView(LoginRequiredMixin, CreateView):
+    model = ProductMeta
+    fields = '__all__'
+    template_name = 'sale/seller_productmeta.html'
+
+    # def get_context_data(self, **kwargs):
+    #     context = super().get_context_data(**kwargs)
+    #     context['pro'] = Product.objects.filter()
+
+    def get_success_url(self):
+        return reverse('userprofile', kwargs={'user_id': self.request.user.id})
+
+
+class SellerShopProductView(LoginRequiredMixin, CreateView):
+    model = ShopProduct
+    fields = '__all__'
+    template_name = 'sale/seller_shop_product.html'
+
+    def get_success_url(self):
+        return reverse('userprofile', kwargs={'user_id': self.request.user.id})
+
+
+def sellerprofile(request):
+    user = request.user.id
+    context = {'shop_product': ShopProduct.objects.filter(shop__user_id=user),
+               'comments': Comment.objects.filter(product__ShopProducts__shop__user__id = user)}
+    return render(request, 'sale/seller_profile.html', context)
