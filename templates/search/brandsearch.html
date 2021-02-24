@@ -15,7 +15,8 @@
                     <div class="product-categori">
                         <div class="search-product">
                             <form action="{% url 'searchcategory' %}">
-                                <input class="form-control" name="categorysearch" placeholder="Search here..." type="search">
+                                <input class="form-control" name="categorysearch" placeholder="Search here..."
+                                       type="search">
                                 <button type="submit"><i class="fa fa-search"></i></button>
                             </form>
                         </div>
@@ -29,23 +30,25 @@
                                  id="list-group-men">
 
                                 {% for cat in categories %}
-                                <div class="dropright">
-                                {% if cat.parent == None %}
+                                    <div class="dropright">
+                                        {% if cat.parent == None %}
 
-                                    <a href="{{ cat.get_absolute_url }}" class="dropdown-toggle"  id="dropdownMenu2" data-toggle="dropdown"
-                                       aria-haspopup="true" aria-expanded="false">
-                                        {{ cat.name }}
-                                    </a>
-                                    {% endif %}
+                                            <a href="{{ cat.get_absolute_url }}" class="dropdown-toggle"
+                                               id="dropdownMenu2" data-toggle="dropdown"
+                                               aria-haspopup="true" aria-expanded="false">
+                                                {{ cat.name }}
+                                            </a>
+                                        {% endif %}
 
-                                    <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
-                                        {% for incat in categories %}
-                                            {% if incat.parent == cat %}
-                                        <a href="{{ incat.get_absolute_url }}" class="dropdown-item" >{{ incat.name }}</a>
-                                            {% endif %}
+                                        <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
+                                            {% for incat in categories %}
+                                                {% if incat.parent == cat %}
+                                                    <a href="{{ incat.get_absolute_url }}"
+                                                       class="dropdown-item">{{ incat.name }}</a>
+                                                {% endif %}
                                             {% endfor %}
+                                        </div>
                                     </div>
-                                </div>
                                 {% endfor %}
 
                             </div>
@@ -58,16 +61,66 @@
                             </div>
                             <div class="brand-box">
                                 <ul>
-                                    {% for brand in object_list %}
-                                        {% ifchanged brand.product.brand %}
-                                            <li>
-                                                <div class="radio radio-danger">
-                                                    <input name="survey" id="Radios1" value="Yes" type="radio">
-                                                    <label for="Radios1"> {{ brand.product.brand }} </label>
-                                                </div>
-                                            </li>
-                                        {% endifchanged %}
-                                    {% endfor %}
+
+                                    <li>
+                                        <div class="radio radio-danger">
+                                            <form action="{% url 'searchbrand' %}" method="get">
+                                                {% for brand in object_list %}
+
+                                                    {% ifchanged brand.product.brand %}
+                                                        <p>
+                                                            <label id="{{ brand.product.brand }}">{{ brand.product.brand }}</label>
+                                                            <input id="{{ brand.product.brand }}"
+                                                                   name="checkname{{ forloop.counter }}" type="checkbox"
+                                                                   value="{{ brand.product.brand }}">
+                                                        </p>
+
+                                                    {% endifchanged %}
+                                                {% endfor %}
+                                                <button type="submit">submit</button>
+                                            </form>
+
+                                        </div>
+                                    </li>
+
+                                </ul>
+                            </div>
+                        </div>
+
+
+                        <div class="filter-brand-left">
+                            <div class="title-left">
+                                <h3>فیلتر محصول</h3>
+                            </div>
+                            <div class="brand-box">
+                                <ul>
+
+                                    <li>
+                                        <div class="radio radio-danger">
+                                            <form action="{% url 'sorted' %}" method="get">
+
+                                                <p>
+                                                    <label id="1">یشتر دیده شده</label>
+                                                    <input id="1" name="ch1" value="1" type="checkbox">
+                                                </p>
+                                                  <p>
+                                                    <label id="2">کمترین قیمت</label>
+                                                    <input id="2" name="ch2" value="2" type="checkbox">
+                                                </p>
+                                                  <p>
+                                                    <label id="3">بیشترین قیمت</label>
+                                                    <input id="3" name="ch3" value="3" type="checkbox">
+                                                </p>
+
+
+
+
+                                                <button type="submit">submit</button>
+                                            </form>
+
+                                        </div>
+                                    </li>
+
                                 </ul>
                             </div>
                         </div>
@@ -80,14 +133,7 @@
                         <div class="product-item-filter row">
                             <div class="col-12 col-sm-8 text-center text-sm-left">
                                 <div class="toolbar-sorter-right">
-                                    <span>Sort by </span>
-                                    <select id="basic" class="selectpicker show-tick form-control"
-                                            data-placeholder="$ USD">
-                                        <option data-display="Select">بدون فيلتر</option>
-                                        <option value="1">محبوبيت</option>
-                                        <option value="2">قيمت كم → قيمت زياد</option>
-                                        <option value="3">قيمت زياد → قيمت كم</option>
-                                    </select>
+
                                 </div>
                                 <p>result: {{ object_list.count }} product</p>
                             </div>
@@ -156,9 +202,9 @@
         </div>
     </div>
     <!-- End Shop Page -->
-                <div class="container text-center">
-                    {% include 'component/paginate.html' with page=page_obj %}
+    <div class="container text-center">
 
-                </div>
+
+    </div>
 
 {% endblock %}

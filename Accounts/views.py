@@ -108,7 +108,7 @@ class SellerProductView(LoginRequiredMixin, CreateView):
     template_name = 'sale/seller_product.html'
 
     def get_success_url(self):
-        return reverse('userprofile', kwargs={'user_id': self.request.user.id})
+        return reverse('sellerprofile')
 
 
 class SellerProductMetaView(LoginRequiredMixin, CreateView):
@@ -116,25 +116,24 @@ class SellerProductMetaView(LoginRequiredMixin, CreateView):
     fields = '__all__'
     template_name = 'sale/seller_productmeta.html'
 
-    # def get_context_data(self, **kwargs):
-    #     context = super().get_context_data(**kwargs)
-    #     context['pro'] = Product.objects.filter()
-
     def get_success_url(self):
-        return reverse('userprofile', kwargs={'user_id': self.request.user.id})
+        return reverse('sellerprofile')
 
 
 class SellerShopProductView(LoginRequiredMixin, CreateView):
-    model = ShopProduct
+    # model = ShopProduct
     fields = '__all__'
     template_name = 'sale/seller_shop_product.html'
 
+    def get_queryset(self):
+        return ShopProduct.objects.filter(shop__user_id=self.request.user.id)
+
     def get_success_url(self):
-        return reverse('userprofile', kwargs={'user_id': self.request.user.id})
+        return reverse('sellerprofile')
 
 
 def sellerprofile(request):
     user = request.user.id
     context = {'shop_product': ShopProduct.objects.filter(shop__user_id=user),
-               'comments': Comment.objects.filter(product__ShopProducts__shop__user__id = user)}
+               'comments': Comment.objects.filter()}
     return render(request, 'sale/seller_profile.html', context)

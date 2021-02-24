@@ -1,3 +1,4 @@
+from django.contrib.auth import get_user_model
 from django.contrib.contenttypes.fields import GenericRelation
 from django.db import models
 from django.db.models.base import Model
@@ -117,8 +118,6 @@ class Comment(models.Model):
     def dislike_count(self):
         q = like.objects.filter(comment=self,condition=False)
         return q.count()
-
-
 
 
 

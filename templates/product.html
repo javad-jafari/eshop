@@ -200,8 +200,6 @@
                         <h3>${data.full_name}</h3>
                         <p>${data.content}</p>
                     </div>
-
-
                     <div>
                         like:<span id='like_counter${data.id}'>${data.like_count}</span>
                         dislike:<span id='dislike_counter${data.id}'>${data.dislike_count}</span>
@@ -210,8 +208,6 @@
                         <button class="bg-success" onclick="likecomment(${data.id})"></button>
                         <button class="bg-danger" onclick="likecomment(${data.id},false)"></button>
                     </div>
-
-
                 </div>`
                     $(".adds").prepend(result);
                 }
