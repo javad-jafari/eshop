@@ -79,8 +79,8 @@
             <h4> آدرس ها</h4>
             {% if address != None %}
                 {% for f in address %}
-                   <p> {{ forloop.counter }}-
-                {{ f.city }}-{{ f.street }}-{{ f.alley }}</p>
+                    <p> {{ forloop.counter }}-
+                        {{ f.city }}-{{ f.street }}-{{ f.alley }}</p>
                 {% endfor %}
             {% else %}
                 <p>---------------------------</p>
@@ -96,7 +96,6 @@
                     <li class="list-group-item "><h3 class="btn btn-outline-info">
                         <a href="{% url 'basketlist' %}">سفارشات من</a></h3></li>
 
-                    <li class="list-group-item btn"><h3 class="btn btn-outline-info">نشانی ها</h3></li>
                     <li class="list-group-item btn"><h3 class="btn btn-outline-info">
                         <a href="{% url 'change_password' %}">
                             تغییر رمز عبور
