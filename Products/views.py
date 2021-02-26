@@ -93,7 +93,7 @@ def create_comment(request):
 class SearchResultsView(ListView):
     model = ShopProduct
     template_name = 'search/searchbar.html'
-    paginate_by = 3
+    paginate_by = 6
 
     def get_queryset(self):
         query = self.request.GET.get('search')
@@ -107,7 +107,7 @@ class SearchResultsView(ListView):
 class SearchCatView(ListView):
     model = ShopProduct
     template_name = 'search/categorysearch.html'
-    paginate_by = 3
+    paginate_by = 6
 
     def get_queryset(self):
         query = self.request.GET.get('categorysearch')
@@ -118,7 +118,7 @@ class SearchCatView(ListView):
 class SearchBrandView(ListView):
     model = ShopProduct
     template_name = 'search/brandsearch.html'
-    paginate_by = 3
+    paginate_by = 6
 
     def get_queryset(self):
         val = ""
@@ -134,7 +134,7 @@ class SearchBrandView(ListView):
 class Sorted(ListView):
     model = ShopProduct
     template_name = 'search/categorysearch.html'
-    paginate_by = 3
+    paginate_by = 6
 
     def get_queryset(self):
         for key, value in self.request.GET.items():
