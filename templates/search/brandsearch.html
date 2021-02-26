@@ -103,16 +103,14 @@
                                                     <label id="1">یشتر دیده شده</label>
                                                     <input id="1" name="ch1" value="1" type="checkbox">
                                                 </p>
-                                                  <p>
+                                                <p>
                                                     <label id="2">کمترین قیمت</label>
                                                     <input id="2" name="ch2" value="2" type="checkbox">
                                                 </p>
-                                                  <p>
+                                                <p>
                                                     <label id="3">بیشترین قیمت</label>
                                                     <input id="3" name="ch3" value="3" type="checkbox">
                                                 </p>
-
-
 
 
                                                 <button type="submit">submit</button>
@@ -202,9 +200,43 @@
         </div>
     </div>
     <!-- End Shop Page -->
-    <div class="container text-center">
 
 
+
+
+
+
+
+
+
+    <div class="container">
+        <nav aria-label="Page navigation example">
+            <ul class="pagination">
+                {% if page_obj.has_previous %}
+                    <li class="page-item"><a class="page-link" href="?page={{ page_obj.previous_page_number }}">
+                        Previous</a></li>
+                {% endif %}
+
+                {% for i in page_obj.paginator.page_range %}
+                    {% if page_obj.number == i %}
+                        <li class="page-item active"><a class="page-link" href="?page={{ i }}">
+                            {{ i }}
+                        </a></li>
+                    {% else %}
+                        <li class="page-item"><a class="page-link" href="?page={{ i }}">
+                            {{ i }}
+                        </a></li>
+
+                    {% endif %}
+                {% endfor %}
+
+
+                {% if page_obj.has_next %}
+                    <li class="page-item"><a class="page-link" href="?page={{ page_obj.next_page_number }}">
+                        Next</a></li>
+                {% endif %}
+            </ul>
+        </nav>
     </div>
 
 {% endblock %}
