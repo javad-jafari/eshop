@@ -74,9 +74,10 @@
                                 {{ basketform.shop_id }}
                                 <div class="price-box-bar">
                                     <label>تعداد</label>
+
                                     {{ basketform.quantity }}
 
-                                    <button type="submit"> افزودن به سبد خرید</button>
+                                    <button type="submit" class="btn btn-outline-danger p-2"> افزودن به سبد خرید</button>
                                 </div>
                             </form>
 
@@ -103,16 +104,24 @@
         </div>
 
         <hr>
-        <div class="container d-flex">
+        <div class="container d-flex" dir="rtl">
 
             {% if request.user.is_authenticated %}
-
-                <form id="comment_form">
+                <div class="alert alert-danger mx-5 text-right col-lg-3">
+                    <p>نظر شما فعلا ثبت میشه ولی بررسی میشه</p>
+                    <p>لطفا از الفاظ رکیک استفاده نشود</p>
+                    <p>از بیان جملات سیاسی خوداری شود</p>
+                    <p></p>
+                </div>
+                <div class="">
+                <form id="comment_form" class="form-group inline-group">
                     {% csrf_token %}
                     {% include 'component/commentform.html' %}
 
-                    <input type="submit" value="ok" class="btn btn-outline-info">
+                    <input onclick="myFunction()" type="submit" value="ثبت نظر" class="btn btn-outline-danger p-3 " id="mass" >
+
                 </form>
+                </div>
             {% else %}
                 <div class="col-lg-12 col-sm-12 mb-5">
                     <textarea class="form-control text-right" rows="5" cols="100"
@@ -123,26 +132,28 @@
 
         </div>
 
+
         <hr>
+
         <h2 class="text-center">بخش نظرات</h2>
         <hr>
 
-        <div class="container adds">
+        <div class="container text-right adds">
             {% for comment in comments %}
-                <div class="row mt-5 mb-5" style="border: #0c5460 solid">
+                <div class="row mt-5 mb-5" style="border: #b94a48 solid">
                     <div class="container">
                         <h3>{{ comment.author }}</h3>
                         <p>{{ comment.content }}</p>
                     </div>
 
 
-                    <div>
+                    <div class="mx-3">
                         like:<span id='like_counter{{ comment.id }}'>{{ comment.like_count }}</span>
                         dislike:<span id='dislike_counter{{ comment.id }}'>{{ comment.dislike_count }}</span>
                     </div>
                     <div class="mx-5">
-                        <button class="bg-success" onclick="likecomment({{ comment.id }})"></button>
-                        <button class="bg-danger" onclick="likecomment({{ comment.id }},false)"></button>
+                        <button class="bg-success fa fa-thumbs-up" onclick="likecomment({{ comment.id }})"></button>
+                        <button class="bg-danger fa fa-thumbs-down" onclick="likecomment({{ comment.id }},false)"></button>
                     </div>
 
 
@@ -195,7 +206,7 @@
                     const data = JSON.parse(response)
                     console.log(data)
                     const result = `
-                                 <div class="row mt-5 mb-5" style="border: #0c5460 solid">
+                                 <div class="row mt-5 mb-5" style="border: #b94a48 solid">
                     <div class="container">
                         <h3>${data.full_name}</h3>
                         <p>${data.content}</p>
@@ -205,8 +216,8 @@
                         dislike:<span id='dislike_counter${data.id}'>${data.dislike_count}</span>
                     </div>
                     <div class="mx-5">
-                        <button class="bg-success" onclick="likecomment(${data.id})"></button>
-                        <button class="bg-danger" onclick="likecomment(${data.id},false)"></button>
+                        <button class="bg-success fa fa-thumbs-up" onclick="likecomment(${data.id})"></button>
+                        <button class="bg-danger fa fa-thumbs-down" onclick="likecomment(${data.id},false)"></button>
                     </div>
                 </div>`
                     $(".adds").prepend(result);
@@ -217,6 +228,12 @@
 
 
 
+   <script>
+function myFunction() {
+
+  alert("نظرتون فعلا ثبت شد");
+}
+</script>
 
 
 

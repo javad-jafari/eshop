@@ -168,15 +168,8 @@
                                                         <img src="{{ cat.product.image.url }}" class="img-fluid"
                                                              alt="Image">
                                                         <div class="mask-icon">
-                                                            <ul>
 
-                                                                <li><a href="#" data-toggle="tooltip"
-                                                                       data-placement="right"
-                                                                       title="Add to Wishlist"><i
-                                                                        class="far fa-heart"></i></a>
-                                                                </li>
-                                                            </ul>
-                                                            <a class="cart" href="#">Add to Cart</a>
+                                                            <a class="cart" href="{{ cat.get_absolute_url }}">مشاهده محصول</a>
                                                         </div>
                                                     </div>
                                                     <div class="why-text">
