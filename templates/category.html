@@ -7,6 +7,31 @@
 
 
 
+        <div class=" bg-light text-right co-12">
+        <hr>
+        <div class="container" dir="rtl">
+            <div class="row text-primary">
+                <div><a href="{% url 'home' %}">
+                    خانه ></a>
+                </div>
+                <div>
+                    {% for c in shopproducts  %}
+                        {% if forloop.first %}
+                        {{c.product.category.name }}
+                        {% endif %}
+                    {% endfor %}
+                </div>
+
+            </div>
+
+        </div>
+        <hr>
+    </div>
+    <div>
+
+
+
+
     <!-- Start Shop Page  -->
     <div class="shop-box-inner">
         <div class="container">

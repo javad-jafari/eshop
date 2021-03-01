@@ -5,7 +5,24 @@
 {% block content %}
 
 
+    <div class=" bg-light text-right co-12">
+        <hr>
+        <div class="container" dir="rtl">
+            <div class="row text-primary">
+                <div><a href="{% url 'home' %}">
+                    خانه ></a>
+                </div>
+                <div>
+                    <a href="{{ product.product.category.get_absolute_url }}">
+                        {{ product.product.category.name }} >
+                    </a>
+                </div>
+                <div>{{ product.product.name }}</div>
+            </div>
 
+        </div>
+        <hr>
+    </div>
     <div>
         <!-- Start Shop Detail  -->
         <div class="shop-detail-box-main">
@@ -77,7 +94,8 @@
 
                                     {{ basketform.quantity }}
 
-                                    <button type="submit" class="btn btn-outline-danger p-2"> افزودن به سبد خرید</button>
+                                    <button type="submit" class="btn btn-outline-danger p-2"> افزودن به سبد خرید
+                                    </button>
                                 </div>
                             </form>
 
@@ -114,13 +132,14 @@
                     <p></p>
                 </div>
                 <div class="">
-                <form id="comment_form" class="form-group inline-group">
-                    {% csrf_token %}
-                    {% include 'component/commentform.html' %}
+                    <form id="comment_form" class="form-group inline-group">
+                        {% csrf_token %}
+                        {% include 'component/commentform.html' %}
 
-                    <input onclick="myFunction()" type="submit" value="ثبت نظر" class="btn btn-outline-danger p-3 " id="mass" >
+                        <input onclick="myFunction()" type="submit" value="ثبت نظر" class="btn btn-outline-danger p-3 "
+                               id="mass">
 
-                </form>
+                    </form>
                 </div>
             {% else %}
                 <div class="col-lg-12 col-sm-12 mb-5">
@@ -153,7 +172,8 @@
                     </div>
                     <div class="mx-5">
                         <button class="bg-success fa fa-thumbs-up" onclick="likecomment({{ comment.id }})"></button>
-                        <button class="bg-danger fa fa-thumbs-down" onclick="likecomment({{ comment.id }},false)"></button>
+                        <button class="bg-danger fa fa-thumbs-down"
+                                onclick="likecomment({{ comment.id }},false)"></button>
                     </div>
 
 
@@ -228,12 +248,12 @@
 
 
 
-   <script>
-function myFunction() {
+    <script>
+        function myFunction() {
 
-  alert("نظرتون فعلا ثبت شد");
-}
-</script>
+            alert("نظرتون فعلا ثبت شد");
+        }
+    </script>
 
 
 
