@@ -5,8 +5,8 @@
 {% block content %}
 
 
-    <div class=" bg-light text-right co-12">
-        <hr>
+    <div class=" bg-white text-right co-12">
+
         <div class="container" dir="rtl">
             <div class="row text-primary">
                 <div><a href="{% url 'home' %}">
@@ -125,19 +125,18 @@
         <div class="container d-flex" dir="rtl">
 
             {% if request.user.is_authenticated %}
-                <div class="alert alert-danger mx-5 text-right col-lg-3">
+                <div class="alert alert-danger mx-5 text-right d-none d-sm-block">
                     <p>نظر شما فعلا ثبت میشه ولی بررسی میشه</p>
                     <p>لطفا از الفاظ رکیک استفاده نشود</p>
                     <p>از بیان جملات سیاسی خوداری شود</p>
-                    <p></p>
+
                 </div>
-                <div class="">
+                <div class="container col-lg-4 ">
                     <form id="comment_form" class="form-group inline-group">
                         {% csrf_token %}
                         {% include 'component/commentform.html' %}
 
-                        <input onclick="myFunction()" type="submit" value="ثبت نظر" class="btn btn-outline-danger p-3 "
-                               id="mass">
+                        <input onclick="myFunction()" type="submit" value="ثبت نظر" class="btn btn-outline-danger p-3 ">
 
                     </form>
                 </div>

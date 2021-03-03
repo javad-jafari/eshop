@@ -121,31 +121,40 @@ class SearchBrandView(ListView):
     paginate_by = 6
 
     def get_queryset(self):
-        val = ""
-        for key, value in self.request.GET.items():
-            print("%s %s" % (key, value))
-            val += value
 
-        object_list = ShopProduct.objects.filter(Q(product__brand__name__icontains=val))
+        brand = self.request.GET.get('checkname')
 
-        return object_list
+        sort = self.request.GET.get('ch')
+
+        if sort == '0':
+            object_list = ShopProduct.objects.filter(Q(product__category__slug=brand))
+            return object_list
+        elif sort == '1':
+            object_list = ShopProduct.objects.filter(Q(product__category__slug=brand)).order_by('product__seen')
+            return object_list
+        elif sort == '2':
+            object_list = ShopProduct.objects.filter(Q(product__category__slug=brand)).order_by('price')
+            return object_list
+        elif sort == '3':
+            object_list = ShopProduct.objects.filter(Q(product__category__slug=brand)).order_by('-price')
+            return object_list
 
 
-class Sorted(ListView):
-    model = ShopProduct
-    template_name = 'search/categorysearch.html'
-    paginate_by = 6
-
-    def get_queryset(self):
-        for key, value in self.request.GET.items():
-            print(type(value))
-            if value == '1':
-                object_list = ShopProduct.objects.filter(product__brand__name='گوچی').order_by('product__seen')
-                return object_list
-
-            elif value == '2':
-                object_list = ShopProduct.objects.filter(product__brand__name='گوچی').order_by('-price')
-                return object_list
-            elif value == '3':
-                object_list = ShopProduct.objects.filter(product__brand__name='گوچی').order_by('price')
-                return object_list
+# class Sorted(ListView):
+#     model = ShopProduct
+#     template_name = 'search/categorysearch.html'
+#     paginate_by = 6
+#
+#     def get_queryset(self):
+#         for key, value in self.request.GET.items():
+#             print(type(value))
+#             if value == '1':
+#                 object_list = ShopProduct.objects.filter(product__brand__name='گوچی').order_by('product__seen')
+#                 return object_list
+#
+#             elif value == '2':
+#                 object_list = ShopProduct.objects.filter(product__brand__name='گوچی').order_by('-price')
+#                 return object_list
+#             elif value == '3':
+#                 object_list = ShopProduct.objects.filter(product__brand__name='گوچی').order_by('price')
+#                 return object_list

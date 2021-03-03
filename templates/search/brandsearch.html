@@ -56,64 +56,43 @@
 
 
                         <div class="filter-brand-left">
-                            <div class="title-left">
-                                <h3>Brand</h3>
-                            </div>
+
                             <div class="brand-box">
                                 <ul>
 
                                     <li>
                                         <div class="radio radio-danger">
                                             <form action="{% url 'searchbrand' %}" method="get">
-                                                {% for brand in object_list %}
+                                                <h3 class="title-left">فیلتر برند</h3>
+                                                <div class="form-group">
 
-                                                    {% ifchanged brand.product.brand %}
-                                                        <p>
-                                                            <label id="{{ brand.product.brand }}">{{ brand.product.brand }}</label>
-                                                            <input id="{{ brand.product.brand }}"
-                                                                   name="checkname{{ forloop.counter }}" type="checkbox"
-                                                                   value="{{ brand.product.brand }}">
-                                                        </p>
+                                                    <select class="form-control" name="checkname"
+                                                            id="exampleFormControlSelect1">
+                                                        {% for brand in object_list %}
+                                                            {% ifchanged brand.product.brand %}
+                                                                <option value="{{ brand.product.category.slug }}"
+                                                                        selected>{{ brand.product.brand }}</option>
+                                                            {% endifchanged %}
+                                                        {% endfor %}
 
-                                                    {% endifchanged %}
-                                                {% endfor %}
-                                                <button type="submit">submit</button>
-                                            </form>
+                                                    </select>
+                                                </div>
+                                                <h3 class="title-left mt-5">فیلتر اضافی</h3>
+                                                <div class="form-group">
 
-                                        </div>
-                                    </li>
+                                                    <div class="form-group">
 
-                                </ul>
-                            </div>
-                        </div>
+                                                        <select class="form-control" name="ch"
+                                                                id="exampleFormControlSelect1">
+                                                            <option value="0" selected>مرتب سازی براساس</option>
+                                                            <option value="1">بیشترین بازدید</option>
+                                                            <option value="2">کمترین قیمت</option>
+                                                            <option value="3">بیشترین قیمت</option>
 
-
-                        <div class="filter-brand-left">
-                            <div class="title-left">
-                                <h3>فیلتر محصول</h3>
-                            </div>
-                            <div class="brand-box">
-                                <ul>
-
-                                    <li>
-                                        <div class="radio radio-danger">
-                                            <form action="{% url 'sorted' %}" method="get">
-
-                                                <p>
-                                                    <label id="1">یشتر دیده شده</label>
-                                                    <input id="1" name="ch1" value="1" type="checkbox">
-                                                </p>
-                                                <p>
-                                                    <label id="2">کمترین قیمت</label>
-                                                    <input id="2" name="ch2" value="2" type="checkbox">
-                                                </p>
-                                                <p>
-                                                    <label id="3">بیشترین قیمت</label>
-                                                    <input id="3" name="ch3" value="3" type="checkbox">
-                                                </p>
-
-
-                                                <button type="submit">submit</button>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <button type="submit" class="btn btn-outline-danger">submit</button>
                                             </form>
 
                                         </div>
@@ -160,13 +139,14 @@
                                                 <div class="products-single fix">
                                                     <div class="box-img-hover">
                                                         <div class="type-lb">
-                                                            <p class="sale">Sale</p>
+                                                            <p class="sale">فروش ویژه</p>
                                                         </div>
                                                         <img src="{{ cat.product.image.url }}" class="img-fluid"
-                                                             alt="Image">
+                                                             alt="Image" >
                                                         <div class="mask-icon">
 
-                                                            <a class="cart" href="{{ cat.get_absolute_url }}">مشاهده محصول</a>
+                                                            <a class="cart" href="{{ cat.get_absolute_url }}">مشاهده
+                                                                محصول</a>
                                                         </div>
                                                     </div>
                                                     <div class="why-text">

@@ -1,6 +1,6 @@
 from django.urls import path, include
 from .views import CategoryDetailView, ProductDetailView, like_comment, create_comment, SearchResultsView, \
-    SearchCatView, SearchBrandView,Sorted
+    SearchCatView, SearchBrandView
 
 urlpatterns = [
     path('category/<slug:category_slug>', CategoryDetailView.as_view(), name='category_detail'),
@@ -10,7 +10,7 @@ urlpatterns = [
     path('searchbar/', SearchResultsView.as_view(), name='searchbar'),
     path('searchcategory/', SearchCatView.as_view(), name='searchcategory'),
     path('searchbrand/', SearchBrandView.as_view(), name='searchbrand'),
-    path('sorted/', Sorted.as_view(), name='sorted'),
+
 
 
 ]
