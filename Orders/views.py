@@ -12,7 +12,7 @@ from django.views.generic import ListView, UpdateView
 from Accounts.models import Address
 from Orders.models import BasketItem, Basket
 from Products.models import Category, ShopProduct
-from Orders.forms import BasketDetailForm, OrderedForm
+from Orders.forms import BasketDetailForm, OrderedForm, AddAddressForm
 
 
 @login_required(login_url='/accounts/login')
@@ -25,6 +25,8 @@ def basketlist(request):
         context['detail'] = open_basket.itemsbasket.all()
         context['total_price'] = open_basket.sum_total()
         context['order_form'] = OrderedForm(initial={'Basket_id': open_basket.id})
+        context['address'] = Address.objects.filter(user_id=request.user.id)
+        context['AddressForm'] = AddAddressForm()
 
     return render(request, 'order/basketlist.html', context)
 
@@ -105,3 +107,20 @@ def finished_order(request):
         context['total_price'] = finish.sum_total()
 
     return render(request, 'order/checkout.html', context)
+
+
+@login_required(login_url='/accounts/login')
+def add_address(request):
+    forms = AddAddressForm(request.POST or None)
+    if forms.is_valid():
+        city = forms.cleaned_data.get('city')
+        street = forms.cleaned_data.get('street')
+        alley = forms.cleaned_data.get('alley')
+        zip_code = forms.cleaned_data.get('zip_code')
+        new_address = Address.objects.create(user_id=request.user.id, city=city, street=street,
+                                          alley=alley, zip_code=zip_code)
+
+        new_address.save()
+
+        return redirect('basketlist')
+    return redirect('basketlist')

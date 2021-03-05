@@ -4,6 +4,7 @@ from django.core.exceptions import ValidationError
 from django.forms import fields
 from django.utils.translation import ugettext_lazy as _
 from django.contrib.auth.models import User
+import re
 
 User = get_user_model()
 
@@ -41,6 +42,14 @@ class UserThirdRegistrationForm(forms.ModelForm):
         if cd['password'] != cd['password2']:
             raise forms.ValidationError('Passwords don\'t match.')
         return cd['password2']
+
+    def clean_mobile(self):
+        mobile = self.cleaned_data['mobile']
+        regex = "^09[0|1|2|3][0-9]{8}$"
+        if re.search(regex, mobile):
+            return mobile
+        else:
+            raise forms.ValidationError('شماره تلفن  صحیحی را وارد کنید ')
 
 
 class UserUpdateForm(forms.ModelForm):

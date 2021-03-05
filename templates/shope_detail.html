@@ -1,0 +1,72 @@
+{% extends 'base/base.html' %}
+{% load static %}
+
+{% block title %}  {% endblock %}
+
+{% block content %}
+
+
+
+    <div class="container mx-5 my-5 bg-light border border-danger rounded">
+        <div class="container col-lg-12"><img src="{{ shope.image.url }}" class="rounded-circle shadow"></div>
+        <div class="text-right container col-lg-12">
+            <h1 class="btn btn-outline-danger my-3">: فروشگاه</h1>
+            <h2>{{ shope.name }} </h2>
+        </div>
+        <div class="text-right container col-lg-12">
+            <h1 class="btn btn-outline-danger my-3">: درمورد فروشگاه</h1>
+            <h2>{{ shope.description }} </h2>
+        </div>
+    </div>
+
+    <hr>
+    <div class="container bg-light p-5">
+    <h1 class="text-right ">محصولات فروشگاه </h1>
+    </div>
+    <hr>
+
+    <!-- Start Products  -->
+    <div class="products-box">
+        <div class="container">
+
+
+            <div class="row special-list">
+                {% for p in pros %}
+
+                    <div class="col-lg-3 col-md-6 special-grid best-seller">
+                        <div class="products-single fix">
+                            <div class="box-img-hover">
+                                <div class="type-lb">
+                                    <a href="{{ p.get_absolute_url }}"><p class="sale">پربازدید</p></a>
+                                </div>
+                                <img src="{{ p.product.image.url }}" class="img-fluid" alt="Image">
+                                <div class="mask-icon">
+
+                                    <a class="cart" href="{{ p.get_absolute_url }}">مشاهده محصول</a>
+                                </div>
+                            </div>
+                            <div class="why-text">
+                                <h4><a href="{{ p.get_absolute_url }}">{{ p.product.name }}</a></h4>
+                                <h5> {{ p.price }}</h5>
+                            </div>
+                        </div>
+                    </div>
+
+                {% endfor %}
+
+
+            </div>
+        </div>
+    </div>
+
+
+    <hr>
+    <div class="container text-right">
+    برای این فروشگاه {{ comments.count }} نظر ثبت شده است.
+    </div>
+    <hr>
+
+
+
+
+{% endblock %}

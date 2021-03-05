@@ -54,6 +54,7 @@
                     </li>
                     <li class="nav-item"><a class="nav-link" href="{% url 'service' %}">سرویس های ما</a></li>
                     <li class="nav-item"><a class="nav-link" href="{% url 'about' %}">ارتباط با ما</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{% url 'shopes' %}">فروشگاه ها</a></li>
                 </ul>
             </div>
             <!-- /.navbar-collapse -->
@@ -62,7 +63,7 @@
             <div class="attr-nav">
                 <ul>
                     {% if request.user.is_authenticated %}
-                        <li class="header-log d-none d-sm-block">
+                        <li class="header-log">
 
                             <div class="card" tabindex="0">
                               <span class="infoicon">
