@@ -1,22 +1,22 @@
 {% load static %}
 <html lang="en">
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
-        <!-- Mobile Metas -->
-        <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Mobile Metas -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <!-- Site Metas -->
-        <title>javad</title>
-        <meta name="keywords" content="">
-        <meta name="description" content="">
-        <meta name="author" content="">
+    <!-- Site Metas -->
+    <title>javad</title>
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <meta name="author" content="">
 
-        <!-- Site Icons -->
-        <link rel="shortcut icon" href="{% static 'img/favicon.ico' %}" type="img/x-icon">
-        <link rel="apple-touch-icon" href="{% static 'img/apple-touch-icon.png' %}">
-        {% block css %}
+    <!-- Site Icons -->
+    <link rel="shortcut icon" href="{% static 'img/favicon.ico' %}" type="img/x-icon">
+    <link rel="apple-touch-icon" href="{% static 'img/apple-touch-icon.png' %}">
+    {% block css %}
         <!-- Custom CSS -->
         <link rel="stylesheet" href="{% static 'css/custom.css' %}">
         <!-- Bootstrap CSS -->
@@ -27,40 +27,57 @@
         <!-- Responsive CSS -->
         <link rel="stylesheet" href="{% static 'css/responsive.css' %}">
 
+        <!-- Smartsupp Live Chat script -->
+        <script type="text/javascript">
+            var _smartsupp = _smartsupp || {};
+            _smartsupp.key = '6ff6f816e751576ecc61ce8427ec11d8a17993dc';
+            window.smartsupp || (function (d) {
+                var s, c, o = smartsupp = function () {
+                    o._.push(arguments)
+                };
+                o._ = [];
+                s = d.getElementsByTagName('script')[0];
+                c = d.createElement('script');
+                c.type = 'text/javascript';
+                c.charset = 'utf-8';
+                c.async = true;
+                c.src = 'https://www.smartsuppchat.com/loader.js?';
+                s.parentNode.insertBefore(c, s);
+            })(document);
+        </script>
+    {% endblock %}
 
-        {% endblock %}
+
+    <script src="{% static 'js/html5shiv.js' %}"></script>
+    <script src="{% static 'respond.min.js' %}"></script>
 
 
-        <script src="{% static 'js/html5shiv.js'%}"></script>
-        <script src="{% static 'respond.min.js'%}"></script>
-
-
-    </head>
+</head>
 
 <body>
-    {% include 'base/header.html' %}
-    {% block content %}
-    {%endblock%}
-    {% include 'base/footer.html' %}
+{% include 'base/header.html' %}
+{% block content %}
+{% endblock %}
+{% include 'base/footer.html' %}
 
-        <!-- ALL JS FILES -->
+<!-- ALL JS FILES -->
 
 
-        <script src="{% static 'js/jquery-3.2.1.min.js' %}"></script>
-        <script src="{% static 'js/popper.min.js' %}"></script>
-        <script src="{% static 'js/bootstrap.min.js' %}"></script>
-        <!-- ALL PLUGINS -->
-        <script src="{% static 'js/jquery.superslides.min.js' %}"></script>
-        <script src="{% static 'js/bootstrap-select.js' %}"></script>
-        <script src="{% static 'js/inewsticker.js' %}"></script>
-        <script src="{% static 'js/bootsnav.js' %}"></script>
-        <script src="{% static 'js/images-loded.min.js' %}"></script>
-        <script src="{% static 'js/isotope.min.js' %}"></script>
-        <script src="{% static 'js/owl.carousel.min.js' %}"></script>
-        <script src="{% static 'js/baguetteBox.min.js' %}"></script>
-        <script src="{% static 'js/form-validator.min.js' %}"></script>
-        <script src="{% static 'js/contact-form-script.js' %}"></script>
-        <script src="{% static 'js/custom.js' %}"></script>
-        {% block javascript %}{% endblock %}
+<script src="{% static 'js/jquery-3.2.1.min.js' %}"></script>
+<script src="{% static 'js/popper.min.js' %}"></script>
+<script src="{% static 'js/bootstrap.min.js' %}"></script>
+<!-- ALL PLUGINS -->
+<script src="{% static 'js/jquery.superslides.min.js' %}"></script>
+<script src="{% static 'js/bootstrap-select.js' %}"></script>
+<script src="{% static 'js/inewsticker.js' %}"></script>
+<script src="{% static 'js/bootsnav.js' %}"></script>
+<script src="{% static 'js/images-loded.min.js' %}"></script>
+<script src="{% static 'js/isotope.min.js' %}"></script>
+<script src="{% static 'js/owl.carousel.min.js' %}"></script>
+<script src="{% static 'js/baguetteBox.min.js' %}"></script>
+<script src="{% static 'js/form-validator.min.js' %}"></script>
+<script src="{% static 'js/contact-form-script.js' %}"></script>
+<script src="{% static 'js/custom.js' %}"></script>
+{% block javascript %}{% endblock %}
 </body>
 </html>
