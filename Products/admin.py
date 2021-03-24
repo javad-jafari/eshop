@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import Product, ShopProduct, Category, Comment, Brand, ProductMeta, like
+from .models import Product, ShopProduct, Category, Comment, Brand, ProductMeta, like , Color , Size
 
 
 # Register your models here.
@@ -74,3 +74,11 @@ class likeAdmin(admin.ModelAdmin):
 @admin.register(ProductMeta)
 class MetaAdmin(admin.ModelAdmin):
     list_display = ('label','value','product')
+
+@admin.register(Size)
+class SizeAdmin(admin.ModelAdmin):
+    list_display = ('name',)
+
+@admin.register(Color)
+class ColorAdmin(admin.ModelAdmin):
+    list_display = ('name',)

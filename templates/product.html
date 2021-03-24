@@ -5,27 +5,27 @@
 {% block content %}
 
 
-    <div class=" bg-white text-right co-12">
 
-        <div class="container" dir="rtl">
-            <div class="row text-primary">
-                <div><a href="{% url 'home' %}">
-                    خانه ></a>
-                </div>
-                <div>
-                    <a href="{{ product.product.category.get_absolute_url }}">
-                        {{ product.product.category.name }} >
-                    </a>
-                </div>
-                <div>{{ product.product.name }}</div>
-            </div>
-
+    <!-- Breadcrumb Start -->
+    <div class="breadcrumb-wrap" dir='rtl'>
+        <div class="container-fluid">
+            <ul class="breadcrumb">
+                <li class="breadcrumb-item"><a href="{% url 'home' %}">خانه</a></li>
+                <li class="breadcrumb-item"><a
+                        href="{{ product.product.category.get_absolute_url }}">{{ product.product.category.name }}</a>
+                </li>
+                <li class="breadcrumb-item active">{{ product.product.name }}</li>
+            </ul>
         </div>
-        <hr>
     </div>
+    <!-- Breadcrumb End -->
+
+
+
+
     <div>
         <!-- Start Shop Detail  -->
-        <div class="shop-detail-box-main">
+        <div class="shop-detail-box-main" dir='rtl'>
             <div class="container">
                 <div class="row">
                     <div class="col-xl-5 col-lg-5 col-md-6">
@@ -71,28 +71,55 @@
                             </h5>
                             <p class="available-stock"><span> موجودی : {{ product.quantity }} / <a href="#">{{ 0 }} فروخته شده </a></span>
                             </p>
-                            <a href="{{ product.product.category.get_absolute_url }}">
-                                <p> دسته بندی: {{ product.product.category }} </p>
 
-                            </a>
+                            <p> دسته بندی:
+                                <a href="{{ product.product.category.get_absolute_url }}">
+                                    {{ product.product.category }}</a>
 
-                            <p>{{ product.shop.name }}</p>
-                            <p>
-                                <small>برند</small>
-                                {{ product.product.brand }}
+                                برند:
+                                <a href="#">{{ product.product.brand }}</a>
+
+                                فروشگاه:
+                                <a href="{% url 'shop_detail' product.shop.slug %}">{{ product.shop.name }}</a>
                             </p>
-                            <h4>در مورد محصول</h4>
-                            <p>{{ product.product.detail|safe|truncatewords:15 }}</p>
 
 
                             <form method="post" action="{% url 'addbasketitem' %}">
                                 {% csrf_token %}
                                 {{ basketform.product_id }}
                                 {{ basketform.shop_id }}
-                                <div class="price-box-bar">
-                                    <label>تعداد</label>
 
+                                <div class='container'>
+
+
+                                    <select class="form-select" name="size" aria-label="Default select example">
+
+                                        <option selected>سایز مورد نظر</option>
+                                        {% for size in sizes %}
+                                            <option value="{{ size }}">{{ size }}</option>
+                                        {% endfor %}
+                                    </select>
+                                    <p>
+                                        <select class="form-select" name="color" aria-label="Default select example">
+                                            <option selected>رنگ مورد نظر</option>
+                                            {% for color in colores %}
+                                                <option value="{{ color }}">
+                                                    {{ color }}
+                                                </option>
+                                            {% endfor %}
+                                        </select>
+                                        {% for color in colores %}
+                                            <img src="{{ color.image.url }}" alt="G" width="15" height="15">
+                                        {% endfor %}
+                                    </p>
+                                </div>
+                                <div class="price-box-bar">
+
+                                    <p><label>تعداد</label>
+                                        <span class='small'>
                                     {{ basketform.quantity }}
+                                    </span>
+                                    </p>
 
                                     <button type="submit" class="btn btn-outline-danger p-2"> افزودن به سبد خرید
                                     </button>
@@ -106,22 +133,62 @@
 
                 <p> چندبار دیده شده:{{ product.product.seen }}</p>
 
+
+                <hr>
+                <div>
+                    <div class="row ">
+                        <div class="col-lg-12">
+                            <ul class="nav nav-pills nav-justified">
+                                <li class="nav-item">
+                                    <a class="nav-link active" data-toggle="pill" href="#description"><h1>در مورد
+                                        محصول</h1></a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" data-toggle="pill" href="#specification"><h1>مشخصات محصول</h1>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" data-toggle="pill" href="#reviews"><h1> نظرات مفید </h1></a>
+                                </li>
+                            </ul>
+
+                            <div class="tab-content">
+                                <div id="description" class="container my-5 text-right tab-pane active">
+
+                                    <p>{{ product.product.detail|safe }}</p>
+                                </div>
+                                <div id="specification" class="container tab-pane fade">
+                                    <ul class="list-group my-5">
+                                        {% for meta in metas %}
+                                            <li class="list-group-item list-group-item-light">
+                                                <div class="row">
+                                                    <div class="mx-5"><h2>{{ meta.label }}</h2></div>
+                                                    <div class="mx-5"><h2>{{ meta.value }}</h2></div>
+
+                                                </div>
+                                                <hr>
+                                            </li>
+                                        {% endfor %}
+                                    </ul>
+
+
+                                </div>
+                                <div id="reviews" class="container tab-pane fade">
+
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
             </div>
         </div>
         <!-- End Cart -->
         <hr>
-        <div class="container">
-            <h2 class="text-right">مشخصات محصول</h2>
-            {% for meta in metas %}
-                <div class="row">
-                    <div class="mx-5">{{ meta.label }}</div>
-                    <div class="mx-5">{{ meta.value }}</div>
-                </div>
-            {% endfor %}
 
-        </div>
 
-        <hr>
         <div class="container d-flex" dir="rtl">
 
             {% if request.user.is_authenticated %}

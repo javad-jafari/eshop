@@ -72,6 +72,8 @@ class BasketItem(models.Model):
 
     quantity = models.PositiveIntegerField(_('quantity'), default=1)
     price = models.PositiveIntegerField(_('price'), default=0)
+    color = models.CharField(_('color'),max_length=25)
+    size = models.CharField(_('size'),max_length=25)
     create_at = models.DateTimeField(_('create at'), auto_now_add=True)
     update_at = models.DateTimeField(_('update at'), auto_now=True)
 

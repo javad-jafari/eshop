@@ -36,20 +36,22 @@ def add_to_basket(request):
     new_basket_form = BasketDetailForm(request.POST or None)
     if new_basket_form.is_valid():
         basket = Basket.objects.filter(user_id=request.user.id, ordered=False).first()
-
+       
         if basket is None:
             basket = Basket.objects.create(user_id=request.user.id, ordered=False)
 
         product_id = new_basket_form.cleaned_data.get('product_id')
         shop_id = new_basket_form.cleaned_data.get('shop_id')
         quantity = new_basket_form.cleaned_data.get('quantity')
+        size = request.POST.get('size')
+        color = request.POST.get('color')
         if quantity < 0:
             quantity = 1
         shop_product = ShopProduct.objects.get(product_id=product_id, shop_id=shop_id)
         if basket.itemsbasket.filter(shop_product_id=shop_product.id).exists():
             pass
         else:
-            basket.itemsbasket.create(shop_product_id=shop_product.id, price=shop_product.price, quantity=quantity)
+            basket.itemsbasket.create(shop_product_id=shop_product.id, price=shop_product.price, quantity=quantity ,size=size, color =color)
         return redirect('basketlist')
 
     return redirect('/')

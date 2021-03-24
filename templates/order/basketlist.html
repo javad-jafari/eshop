@@ -15,12 +15,12 @@
                             <table class="table">
                                 <thead>
                                 <tr>
-                                    <th>Images</th>
-                                    <th>Product Name</th>
-                                    <th>Price</th>
-                                    <th>Quantity</th>
-                                    <th>Total</th>
-                                    <th>Remove</th>
+                                    <th>عکس</th>
+                                    <th>نام محصول</th>
+                                    <th>قیمت</th>
+                                    <th>تعداد</th>
+                                    <th>قیمت کل</th>
+                                    <th>حذف</th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -37,7 +37,11 @@
                                             <a href="{% url 'product_detail'   item.shop_product.product.slug item.shop_product.shop.slug %}">
                                                 {{ item.shop_product.product.name }}
                                             </a>
-                                            <p><small>{{ item.shop_product.shop.name }}</small></p>
+                                            <p>
+                                                <small>{{ item.shop_product.shop.name }}</small>/
+                                                <small> سایز:{{ item.size }}</small>/
+                                                <small>رنگ:{{ item.color }}</small>
+                                            </p>
                                         </td>
                                         <td class="price-pr">
                                             <p>{{ item.shop_product.price }} </p>

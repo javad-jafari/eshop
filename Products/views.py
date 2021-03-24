@@ -8,7 +8,7 @@ from django.views.generic import TemplateView, ListView, DetailView
 
 from Orders.forms import BasketDetailForm
 from Products.forms import CommentForm
-from Products.models import Product, ShopProduct, Comment, like, ProductMeta
+from Products.models import Product, ShopProduct, Comment, like, ProductMeta,Size,Color
 from Products.models import Category
 import json
 from django.db import transaction
@@ -36,6 +36,8 @@ class ProductDetailView(DetailView):
         slug2 = self.kwargs.get('shop_slug')
         context["comments"] = Comment.objects.filter()
         context["metas"] = ProductMeta.objects.filter(product__slug=self.kwargs.get('product_slug'))
+        context["sizes"] = Size.objects.filter(shopproduct__product__slug=slug1,shopproduct__shop__slug=slug2)
+        context["colores"] = Color.objects.filter(shopproduct__product__slug=slug1,shopproduct__shop__slug=slug2)
         item = get_object_or_404(ShopProduct, product__slug=slug1, shop__slug=slug2)
         context['form'] = CommentForm()
         context['basketform'] = BasketDetailForm(initial={'product_id': item.product_id, 'shop_id': item.shop_id})
@@ -43,18 +45,18 @@ class ProductDetailView(DetailView):
 
 
 class CategoryDetailView(ListView):
-    model = ShopProduct
+    # model = ShopProduct
     template_name = 'category.html'
-    paginate_by = 6
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
+    paginate_by = 1
+    context_object_name = "shopproducts"
+    def get_queryset(self):
+        
         slug = self.kwargs.get('category_slug')
         category = get_object_or_404(Category.objects.filter(), slug=slug)
-        context["shopproducts"] = ShopProduct.objects.filter(
+        return ShopProduct.objects.filter(
             Q(product__category=category) | Q(product__category__parent=category))
 
-        return context
+         
 
 
 @csrf_exempt

@@ -29,7 +29,7 @@ class PaymentAdmin(admin.ModelAdmin):
 
 @admin.register(BasketItem)
 class BasketItemAdmin(admin.ModelAdmin):
-    list_display = ('basket', 'shop_product','quantity','price')
+    list_display = ('basket', 'shop_product', 'quantity', 'price', 'size', 'color')
     search_fields = ('basket',)
     list_filter = ('basket',)
 

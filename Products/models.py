@@ -43,6 +43,28 @@ class Brand(models.Model):
     def __str__(self):
         return self.name
 
+class Color(models.Model):
+    name = models.CharField(_('name'), max_length=50)
+    image = models.ImageField(_('image'), upload_to='Product/Color/image')
+
+    class Meta:
+        verbose_name = _('Color')
+        verbose_name_plural = _('Colors')
+
+    def __str__(self):
+        return self.name
+
+class Size(models.Model):
+    name = models.CharField(_('name'), max_length=50)
+
+
+    class Meta:
+        verbose_name = _('Size')
+        verbose_name_plural = _('Sizes')
+
+    def __str__(self):
+        return self.name
+
 
 class Product(models.Model):
     name = models.CharField(_('name'), max_length=50)
@@ -126,6 +148,8 @@ class ShopProduct(models.Model):
         "Shops"), on_delete=models.CASCADE)
     product = models.ForeignKey(Product, related_name='ShopProducts', related_query_name='ShopProducts', verbose_name=_(
         "ShopProduct"), on_delete=models.CASCADE)
+    size = models.ManyToManyField(Size)
+    color = models.ManyToManyField(Color)
     price = models.FloatField(_('price'))
     quantity = models.IntegerField(_('quantity'))
 
